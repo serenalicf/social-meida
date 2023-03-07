@@ -65,9 +65,6 @@ public class UserResourceController {
         service.deleteUser(id);
     }
 
-    @RequestMapping(value = "/users/{userId}/posts", method = RequestMethod.GET)
-    public Optional<Post> retrievePosts(@PathVariable(value = "userId") Integer userId){
-        return service.retrievePosts(userId);
-    }
+
 
 }

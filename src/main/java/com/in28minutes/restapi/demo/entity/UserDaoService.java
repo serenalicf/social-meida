@@ -3,6 +3,7 @@ package com.in28minutes.restapi.demo.entity;
 
 import com.in28minutes.restapi.demo.dto.UserDto;
 import com.in28minutes.restapi.demo.exception.UserNotFoundException;
+import com.in28minutes.restapi.demo.repository.PostRepository;
 import com.in28minutes.restapi.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,9 @@ public class UserDaoService {
     // UserDaoService > Static List
     @Autowired
     UserRepository userRepository;
-    private static List<User> users = new ArrayList<>();
+
+    @Autowired
+    PostRepository postRepository;
 
 
 //    static {
@@ -59,5 +62,15 @@ public class UserDaoService {
 //        Predicate<? super User> predicate = user -> user.getId().equals(id);
 //        users.removeIf(predicate);
         userRepository.deleteById(id);
+    }
+
+    public Optional<Post> retrievePosts(Integer userId){
+        Optional<Post> posts = postRepository.findPostsById(userId);
+        if(posts.isPresent()){
+            return posts;
+        }else{
+            throw new UserNotFoundException("User with id " + userId + " is not found.");
+        }
+//        return userRepository.findPostsById(userId).orElseThrow(() -> new UserNotFoundException("User with id " + userId + " is not found."));
     }
 }

@@ -1,5 +1,6 @@
 package com.in28minutes.restapi.demo.controller;
 
+import com.in28minutes.restapi.demo.entity.Post;
 import com.in28minutes.restapi.demo.entity.User;
 import com.in28minutes.restapi.demo.entity.UserDaoService;
 import com.in28minutes.restapi.demo.dto.UserDto;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -61,6 +63,11 @@ public class UserResourceController {
     @RequestMapping(value = "/users/delete/{id}", method = RequestMethod.POST)
     public void deleteUser(@PathVariable(value = "id") Integer id){
         service.deleteUser(id);
+    }
+
+    @RequestMapping(value = "/users/{userId}/posts", method = RequestMethod.GET)
+    public Optional<Post> retrievePosts(@PathVariable(value = "userId") Integer userId){
+        return service.retrievePosts(userId);
     }
 
 }
